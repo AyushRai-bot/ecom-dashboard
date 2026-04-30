@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}E-Commerce Platforms{% endblock %}
+{% block content %}
+<h1 class="page-title">E-Commerce Platforms</h1>
+<div class="content-card">
+    <table>
+        <thead>
+            <tr>
+                <th>Platform ID</th>
+                <th>Platform Name</th>
+                <th>Website</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for platform in platforms %}
+            <tr>
+                <td>{{ platform.platform_id }}</td>
+                <td>{{ platform.platform_name }}</td>
+                <td><a href="http://{{ platform.website }}" target="_blank" class="link">{{ platform.website }}</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Price History{% endblock %}
+{% block content %}
+<h1 class="page-title">Product Price History</h1>
+<div class="content-card">
+    {% if history %}
+    <table>
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Old Price (₹)</th>
+                <th>New Price (₹)</th>
+                <th>Price Change (₹)</th>
+                <th>Changed Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for h in history %}
+            <tr>
+                <td>{{ h.product_name }}</td>
+                <td>₹{{ "%.2f"|format(h.old_price) }}</td>
+                <td>₹{{ "%.2f"|format(h.new_price) }}</td>
+                <td style="color: {% if h.price_change > 0 %}#10b981{% else %}#ef4444{% endif %}">
+                    {% if h.price_change > 0 %}+{% endif %}₹{{ "%.2f"|format(h.price_change) }}
+                </td>
+                <td>{{ h.changed_date }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <div class="empty-state">No price changes recorded yet.</div>
+    {% endif %}
+</div>
+{% endblock %}

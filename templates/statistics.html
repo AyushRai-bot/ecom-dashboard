@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}Statistics{% endblock %}
+{% block content %}
+<h1 class="page-title">Statistics & Analytics</h1>
+
+<div class="content-card">
+    <h2>Overall Metrics</h2>
+    <div class="stats-grid">
+        <div class="stat-card">
+            <h3>Average Order Value</h3>
+            <div class="value">₹{{ "%.2f"|format(avg_order_value) }}</div>
+        </div>
+    </div>
+</div>
+
+<div class="content-card">
+    <h2>Category-wise Product Distribution</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Category</th>
+                <th>Product Count</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for stat in category_stats %}
+            <tr>
+                <td>{{ stat.category_name }}</td>
+                <td>{{ stat.product_count }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div class="content-card">
+    <h2>City-wise Customer Distribution</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>City</th>
+                <th>Customer Count</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for stat in city_stats %}
+            <tr>
+                <td>{{ stat.city }}</td>
+                <td>{{ stat.customer_count }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

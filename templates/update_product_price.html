@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Update Product Price{% endblock %}
+{% block content %}
+<h1 class="page-title">Update Product Price</h1>
+<div class="content-card">
+    <form id="priceForm" style="max-width: 600px;">
+        <div class="form-group">
+            <label>Product</label>
+            <select name="product_id" id="productSelect" required>
+                <option value="">Select Product</option>
+                {% for product in products %}
+                <option value="{{ product.product_id }}" data-price="{{ product.price }}">
+                    {{ product.product_name }} - Current: ₹{{ "%.2f"|format(product.price) }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label>New Price (₹)</label>
+            <input type="number" step="0.01" name="new_price" id="newPrice" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Update Price</button>
+    </form>
+    <div id="message" style="margin-top: 1rem;"></div>
+</div>
+<div class="content-card">
+    <h2>Recent Price Changes</h2>
+    <p><a href="/price_history" class="link">View Full Price History</a></p>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+$('#priceForm').on('submit', function(e) {
+    e.preventDefault();
+    $.ajax({
+        url: '/update_product_price',
+        method: 'POST',
+        data: $(this).serialize(),
+        success: function(response) {
+            $('#message').html('<div class="message message-success">' + response.message + '</div>');
+            setTimeout(function() { location.reload(); }, 1500);
+        },
+        error: function() {
+            $('#message').html('<div class="message message-error">Error updating price</div>');
+        }
+    });
+});
+</script>
+{% endblock %}

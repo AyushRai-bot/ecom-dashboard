@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - E-Commerce Database{% endblock %}
+
+{% block content %}
+<h1 class="page-title">Dashboard Overview</h1>
+
+<div class="stats-grid">
+    <div class="stat-card">
+        <h3>Total Customers</h3>
+        <div class="value">{{ total_customers }}</div>
+    </div>
+    <div class="stat-card">
+        <h3>Total Orders</h3>
+        <div class="value">{{ total_orders }}</div>
+    </div>
+    <div class="stat-card">
+        <h3>Total Products</h3>
+        <div class="value">{{ total_products }}</div>
+    </div>
+    <div class="stat-card">
+        <h3>Total Revenue</h3>
+        <div class="value">₹{{ "%.2f"|format(total_revenue) }}</div>
+    </div>
+</div>
+
+<div class="content-card">
+    <h2>Payment Method Analysis</h2>
+    <table class="payment-table">
+        <thead>
+            <tr>
+                <th>Payment Method</th>
+                <th>Transactions</th>
+                <th>Total Amount (₹)</th>
+                <th>Average (₹)</th>
+                <th>Percentage</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for payment in payment_analysis %}
+            <tr>
+                <td><span class="badge badge-{{ payment.method|lower }}">{{ payment.method }}</span></td>
+                <td>{{ payment.transactions }}</td>
+                <td>₹{{ "%.2f"|format(payment.total_amount) }}</td>
+                <td>₹{{ "%.2f"|format(payment.avg_amount) }}</td>
+                <td>
+                    {{ payment.percentage }}%
+                    <div class="percentage-bar">
+                        <div class="percentage-fill" style="width: {{ payment.percentage }}%"></div>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div class="content-card">
+    <h2>Quick Access - Reports & Analytics</h2>
+    <div class="stats-grid">
+        <a href="/sales_report" style="text-decoration: none;">
+            <div class="stat-card">
+                <h3>📊 Sales Report</h3>
+                <p style="color: #666; margin-top: 1rem;">Generate date-wise sales report</p>
+            </div>
+        </a>
+        <a href="/top_customers" style="text-decoration: none;">
+            <div class="stat-card">
+                <h3>👥 Top Customers</h3>
+                <p style="color: #666; margin-top: 1rem;">View best customers by spending</p>
+            </div>
+        </a>
+        <a href="/customer_offers" style="text-decoration: none;">
+            <div class="stat-card">
+                <h3>🎁 Customer Offers</h3>
+                <p style="color: #666; margin-top: 1rem;">Generate personalized offers</p>
+            </div>
+        </a>
+        <a href="/products_discount" style="text-decoration: none;">
+            <div class="stat-card">
+                <h3>💰 Product Discounts</h3>
+                <p style="color: #666; margin-top: 1rem;">View products with discounts</p>
+            </div>
+        </a>
+        <a href="/statistics" style="text-decoration: none;">
+            <div class="stat-card">
+                <h3>📈 Statistics</h3>
+                <p style="color: #666; margin-top: 1rem;">Detailed analytics</p>
+            </div>
+        </a>
+        <a href="/order_audit" style="text-decoration: none;">
+            <div class="stat-card">
+                <h3>🔍 Order Audit</h3>
+                <p style="color: #666; margin-top: 1rem;">View order history logs</p>
+            </div>
+        </a>
+    </div>
+</div>
+{% endblock %}

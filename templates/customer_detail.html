@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}{{ customer.cname }} - Customer Details{% endblock %}
+
+{% block content %}
+<h1 class="page-title">Customer Details</h1>
+
+<div class="detail-header">
+    <h1>{{ customer.cname }}</h1>
+    <p>{{ customer.email }} | {{ customer.phone_no }}</p>
+    <p>{{ customer.address }}</p>
+    
+    <div class="detail-stats">
+        <div class="detail-stat">
+            <div class="label">Total Orders</div>
+            <div class="value">{{ order_count }}</div>
+        </div>
+        <div class="detail-stat">
+            <div class="label">Total Spent</div>
+            <div class="value">₹{{ "%.2f"|format(total_spent) }}</div>
+        </div>
+    </div>
+</div>
+
+<div class="content-card">
+    <h2>Order History</h2>
+    {% if orders %}
+    <table>
+        <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>Order Date</th>
+                <th>Amount</th>
+                <th>Payment Method</th>
+                <th>Shipment Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+            <tr>
+                <td>{{ order.order_id }}</td>
+                <td>{{ order.order_date }}</td>
+                <td>₹{{ "%.2f"|format(order.amount) }}</td>
+                <td><span class="badge badge-{{ order.payment_method|lower }}">{{ order.payment_method }}</span></td>
+                <td>{{ order.shipment_date if order.shipment_date else 'Pending' }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <div class="empty-state">
+        <p>No orders found for this customer.</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

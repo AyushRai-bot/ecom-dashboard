@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}Generate Sales Report{% endblock %}
+
+{% block content %}
+<h2>Generate Sales Report</h2>
+<p><em>Using: get_sales_report stored procedure</em></p>
+
+<div class="form-container">
+    <form method="POST" action="{{ url_for('sales_report') }}">
+        <div class="form-group">
+            <label for="start_date">Start Date:</label>
+            <input type="date" id="start_date" name="start_date" required value="2024-01-01">
+        </div>
+        
+        <div class="form-group">
+            <label for="end_date">End Date:</label>
+            <input type="date" id="end_date" name="end_date" required value="2024-02-29">
+        </div>
+        
+        <div class="btn-group">
+            <button type="submit" class="btn">Generate Report</button>
+            <a href="{{ url_for('index') }}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

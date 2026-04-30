@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Category Revenue{% endblock %}
+{% block content %}
+<h1 class="page-title">Category Revenue Analysis</h1>
+<div class="content-card">
+    <table>
+        <thead>
+            <tr>
+                <th>Category ID</th>
+                <th>Category Name</th>
+                <th>Total Revenue (₹)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cat in categories %}
+            <tr>
+                <td>{{ cat.category_id }}</td>
+                <td>{{ cat.category_name }}</td>
+                <td>₹{{ "%.2f"|format(cat.total_revenue) }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

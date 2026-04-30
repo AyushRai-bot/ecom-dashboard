@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}Customer Offers{% endblock %}
+
+{% block content %}
+<h2>Personalized Customer Offers</h2>
+<p><em>Using: generate_customer_offers stored procedure (with cursor)</em></p>
+
+<table>
+    <thead>
+        <tr>
+            <th>Customer ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Total Spent</th>
+            <th>Offer Tier</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for offer in offers %}
+        <tr>
+            <td>{{ offer.customer_id }}</td>
+            <td>{{ offer.customer_name }}</td>
+            <td>{{ offer.email }}</td>
+            <td>₹{{ "%.2f"|format(offer.total_spent) }}</td>
+            <td>
+                {% if 'Gold' in offer.offer_type %}
+                    <span class="badge badge-gold">{{ offer.offer_type }}</span>
+                {% elif 'Silver' in offer.offer_type %}
+                    <span class="badge badge-silver">{{ offer.offer_type }}</span>
+                {% elif 'Bronze' in offer.offer_type %}
+                    <span class="badge badge-bronze">{{ offer.offer_type }}</span>
+                {% else %}
+                    <span class="badge">{{ offer.offer_type }}</span>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}Top Customers{% endblock %}
+
+{% block content %}
+<h1 class="page-title">Top Customers</h1>
+
+<div class="content-card">
+    <form action="/top_customers" method="get" style="max-width: 300px; margin-bottom: 2rem;">
+        <div class="form-group">
+            <label>Number of Customers</label>
+            <input type="number" name="limit" value="{{ limit }}" min="1" max="50">
+        </div>
+        <button type="submit" class="btn btn-primary">Update</button>
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Rank</th>
+                <th>Customer ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Total Orders</th>
+                <th>Total Spent (₹)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for customer in customers %}
+            <tr>
+                <td><strong>{{ loop.index }}</strong></td>
+                <td>{{ customer.cid }}</td>
+                <td><a href="/customer/{{ customer.cid }}" class="link">{{ customer.cname }}</a></td>
+                <td>{{ customer.email }}</td>
+                <td>{{ customer.total_orders }}</td>
+                <td style="font-weight: bold; color: #10b981;">₹{{ "%.2f"|format(customer.total_spent) }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}Products - E-Commerce Database{% endblock %}
+
+{% block content %}
+<h1 class="page-title">Products</h1>
+
+<div class="content-card">
+    <form action="/products" method="get" class="filter-bar">
+        <select name="category" onchange="this.form.submit()">
+            <option value="">All Categories</option>
+            {% for cat in categories %}
+            <option value="{{ cat.category_name }}">{{ cat.category_name }}</option>
+            {% endfor %}
+        </select>
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Product Name</th>
+                <th>Category</th>
+                <th>Type</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+            <tr>
+                <td>{{ product.product_id }}</td>
+                <td>{{ product.product_name }}</td>
+                <td>{{ product.category_name }}</td>
+                <td><span class="badge badge-{{ product.type|lower }}">{{ product.type }}</span></td>
+                <td>₹{{ "%.2f"|format(product.price) }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div style="margin-top: 1rem; text-align: center;">
+    <a href="/products_discount" class="btn btn-primary">View Products with Discounts</a>
+    <a href="/update_product_price" class="btn btn-primary" style="margin-left: 1rem;">Update Product Price</a>
+</div>
+{% endblock %}

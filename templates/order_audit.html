@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Order Audit{% endblock %}
+{% block content %}
+<h1 class="page-title">Order Audit Log</h1>
+<div class="content-card">
+    <p style="margin-bottom: 1.5rem; color: #666;">
+        This log is automatically maintained by database triggers when orders are created or deleted.
+    </p>
+    {% if audits %}
+    <table>
+        <thead>
+            <tr>
+                <th>Audit ID</th>
+                <th>Order ID</th>
+                <th>Customer Name</th>
+                <th>Action</th>
+                <th>Action Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for audit in audits %}
+            <tr>
+                <td>{{ audit.audit_id }}</td>
+                <td>{{ audit.order_id }}</td>
+                <td>{{ audit.customer_name if audit.customer_name else 'N/A' }}</td>
+                <td>
+                    <span class="badge" style="
+                        {% if audit.action == 'INSERT' %}background: #10b981; color: white;
+                        {% else %}background: #ef4444; color: white;{% endif %}
+                    ">{{ audit.action }}</span>
+                </td>
+                <td>{{ audit.action_date }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <div class="empty-state">No audit records found.</div>
+    {% endif %}
+</div>
+{% endblock %}

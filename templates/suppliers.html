@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Suppliers{% endblock %}
+{% block content %}
+<h1 class="page-title">Suppliers</h1>
+<div class="content-card">
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Location</th>
+                <th>Phone</th>
+                <th>Supply Category</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for supplier in suppliers %}
+            <tr>
+                <td>{{ supplier.supplier_id }}</td>
+                <td>{{ supplier.supplier_name }}</td>
+                <td>{{ supplier.location }}</td>
+                <td>{{ supplier.phone }}</td>
+                <td>{{ supplier.supply_category }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block title %}Create Order{% endblock %}
+
+{% block content %}
+<h1 class="page-title">Create New Order</h1>
+
+<div class="content-card">
+    <form id="orderForm" style="max-width: 600px;">
+        <div class="form-row">
+            <div class="form-group">
+                <label>Order ID</label>
+                <input type="number" name="order_id" required>
+            </div>
+            <div class="form-group">
+                <label>Payment ID</label>
+                <input type="number" name="payment_id" required>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label>Customer</label>
+            <select name="customer_id" required>
+                <option value="">Select Customer</option>
+                {% for customer in customers %}
+                <option value="{{ customer.cid }}">{{ customer.cname }} ({{ customer.email }})</option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <div class="form-row">
+            <div class="form-group">
+                <label>Amount (₹)</label>
+                <input type="number" step="0.01" name="amount" required>
+            </div>
+            <div class="form-group">
+                <label>Payment Method</label>
+                <select name="method" required>
+                    <option value="Cash">Cash</option>
+                    <option value="Card">Card</option>
+                    <option value="UPI">UPI</option>
+                </select>
+            </div>
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Create Order</button>
+    </form>
+    
+    <div id="message" style="margin-top: 1rem;"></div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+$(document).ready(function() {
+    $('#orderForm').on('submit', function(e) {
+        e.preventDefault();
+        
+        $.ajax({
+            url: '/create_order',
+            method: 'POST',
+            data: $(this).serialize(),
+            success: function(response) {
+                if(response.success) {
+                    $('#message').html('<div class="message message-success">' + response.message + '</div>');
+                    $('#orderForm')[0].reset();
+                    setTimeout(function() {
+                        window.location.href = '/orders';
+                    }, 2000);
+                } else {
+                    $('#message').html('<div class="message message-error">' + response.message + '</div>');
+                }
+            },
+            error: function() {
+                $('#message').html('<div class="message message-error">An error occurred</div>');
+            }
+        });
+    });
+});
+</script>
+{% endblock %}

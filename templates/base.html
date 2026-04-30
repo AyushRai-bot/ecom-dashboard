@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}E-Commerce Database{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="/" class="logo">E-Commerce Database</a>
+            <ul class="nav-menu">
+                <li><a href="/" {% if request.path == '/' %}class="active"{% endif %}>Dashboard</a></li>
+                <li><a href="/customers" {% if request.path.startswith('/customer') %}class="active"{% endif %}>Customers</a></li>
+                <li><a href="/products" {% if request.path.startswith('/product') %}class="active"{% endif %}>Products</a></li>
+                <li><a href="/orders" {% if request.path.startswith('/order') %}class="active"{% endif %}>Orders</a></li>
+                <li><a href="/payments" {% if request.path == '/payments' %}class="active"{% endif %}>Payments</a></li>
+                <li><a href="/suppliers" {% if request.path == '/suppliers' %}class="active"{% endif %}>Suppliers</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Products with Discounts{% endblock %}
+
+{% block content %}
+<h1 class="page-title">Products with Discounts</h1>
+
+<div class="content-card">
+    <p style="margin-bottom: 1.5rem; color: #666;">Luxury items: 10% off | Essential items: 5% off</p>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Product Name</th>
+                <th>Category</th>
+                <th>Type</th>
+                <th>Original Price (₹)</th>
+                <th>Discount (₹)</th>
+                <th>Discounted Price (₹)</th>
+                <th>Savings</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+            <tr>
+                <td>{{ product.product_id }}</td>
+                <td>{{ product.product_name }}</td>
+                <td>{{ product.category_name }}</td>
+                <td><span class="badge badge-{{ product.type|lower }}">{{ product.type }}</span></td>
+                <td>₹{{ "%.2f"|format(product.original_price) }}</td>
+                <td style="color: #ef4444;">-₹{{ "%.2f"|format(product.discount) }}</td>
+                <td style="font-weight: bold; color: #10b981;">₹{{ "%.2f"|format(product.discounted_price) }}</td>
+                <td>
+                    <span class="badge badge-discount">
+                        {% if product.type == 'Luxury' %}10% OFF{% else %}5% OFF{% endif %}
+                    </span>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
